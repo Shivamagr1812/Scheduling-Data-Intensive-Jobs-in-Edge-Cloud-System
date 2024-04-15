@@ -13,7 +13,26 @@ def CRED_M(nodes, chunks, deadlines, B, jobs, S):
 
 def CRED_S(Ci, F, B, d_i):
     # Implementation of CRED-S function
-    pass
+    N=0
+    C_r=F
+    while C_r >0:
+        C_r.sort(key=lambda x:x[1])
+        
+        total_F = sum(F[i].slots_required for i in range(1, B))
+
+        H_B=[]
+        if total_F>S*d_i:
+            for i in range(1,B):
+                H_B.append(F[i])
+            schedule_chunks(H_B,S*d_i)
+            N+=1
+        else:
+            break
+    while C_r>0:
+        H_B=F
+        schedule_chunks(H_B,S*d_i)
+        N+=1
+    return N
 
 def schedule_chunks(C, NTS):
     # Implementation of chunk scheduling
