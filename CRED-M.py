@@ -201,7 +201,7 @@ def CRED_M(nodes, chunks, deadlines, B, jobs, S):
 
 # User Input
 # J = int(input("Enter the number of jobs: "))
-# N = int(input("Enter the number of nodes: "))
+# Nodes = int(input("Enter the number of nodes: "))
 # B = int(input("Enter the maximum number of data chunks each node can host: "))
 # S = int(input("Enter the number of VMs (virtual machines) on each node: "))
 
@@ -213,12 +213,12 @@ class Job:
 # jobs = []
 # for j in range(J):
 #     deadline = int(input(f"Enter the deadline for job {j+1}: "))
-#     chunks_required = input(f"Enter the list of chunk ids required for job {j+1} (comma-separated): ").split(',')
+#     chunks_required = input(f"Enter the list of chunk ids required for job {j+1} (space-separated): ").split(' ')
 #     chunks_required = [int(chunk_id) for chunk_id in chunks_required]
 #     job = Job(deadline, chunks_required)
 #     jobs.append(job)
 
-J =3  # Number of jobs
+J = 3  # Number of jobs
 Nodes = 15  # Number of nodes
 B = 2  # Maximum number of data chunks each node can host
 S = 1  # Number of VMs (virtual machines) on each node
@@ -243,7 +243,13 @@ class Deadline:
 chunks = []
 deadlines = []
 for job in jobs:
-    if job.deadline not in deadlines:
+    deadline_exists = False
+    for deadline in deadlines:
+        if deadline.deadline == job.deadline:
+            deadline_exists = True
+            break
+    
+    if not deadline_exists:
         # print(job.deadline, job.chunks_required)
         chunks_required = []
         for chunk_id in job.chunks_required:
@@ -280,8 +286,9 @@ for job in jobs:
                     else:
                         chunk = Chunk(chunk_id)
                         chunk.slots_required = 1
+                        deadline.chunks_required.append(chunk)  
 
-                    deadline.chunks_required.append(chunk)
+                break
 
 for deadline in deadlines:
     print("Deadline: ", deadline.deadline)
