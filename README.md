@@ -30,6 +30,13 @@ The algorithm consists of the following components:
 
 4. The function will return the total number of active nodes and the scheduling information for each active node.
 
+## How to Run
+
+You need to have Python installed on your system to run this script. You can run the script using the following command:
+
+```
+python CRED.py
+```
 
 ## Input Format
 
