@@ -31,51 +31,51 @@ The algorithm consists of the following components:
 4. The function will return the total number of active nodes and the scheduling information for each active node.
 
 
-## Input Format:
+## Input Format
 
-<J> <Nodes> <B> <S>
-<deadline_1> <num_chunks_required_1> <chunk_id_1> <chunk_id_2> ... <chunk_id_n>
-<deadline_2> <num_chunks_required_2> <chunk_id_1> <chunk_id_2> ... <chunk_id_m>
-...
-<deadline_J> <num_chunks_required_J> <chunk_id_1> <chunk_id_2> ... <chunk_id_p>
+`<J>` `<Nodes>` `<B>` `<S>`\
+`<deadline_1>` `<num_chunks_required_1>` `<chunk_id_1>` `<chunk_id_2>` ... `<chunk_id_n>`\
+`<deadline_2>` `<num_chunks_required_2>` `<chunk_id_1>` `<chunk_id_2>` ... `<chunk_id_m>`\
+...\
+`<deadline_J>` `<num_chunks_required_J>` `<chunk_id_1>` `<chunk_id_2>` ... `<chunk_id_p>`
 
-## Output Format:
+## Output Format
 
-Number of active nodes: <num_active_nodes>
+Number of active nodes: `<num_active_nodes>`
 
-Chunks scheduled on each active node:
-Node <node_id>:
-    VM <vm_id>:
-        Chunk scheduled: <chunk_id> at time: <start_time>
-        Chunk scheduled: <chunk_id> at time: <start_time>
-        ...
-    VM <vm_id>:
-        Chunk scheduled: <chunk_id> at time: <start_time>
-        Chunk scheduled: <chunk_id> at time: <start_time>
-        ...
+Chunks scheduled on each active node:\
+Node `<node_id>`:\
+&emsp;    VM `<vm_id>`:\
+&emsp;&emsp;        Chunk scheduled: `<chunk_id>` at time: <start_time>\
+&emsp;&emsp;        Chunk scheduled: `<chunk_id>` at time: <start_time>\
+&emsp;&emsp;        ...\
+&emsp;    VM `<vm_id>`:\
+&emsp;&emsp;        Chunk scheduled: `<chunk_id>` at time: <start_time>\
+&emsp;&emsp;        Chunk scheduled: `<chunk_id>` at time: <start_time>\
+&emsp;&emsp;        ...\
 ...
 
 ## Example
 
 Input:
 
-3 15 2 1
-4 6 1 1 1 1 1 1
-4 3 2 3 4
+3 15 2 1\
+4 6 1 1 1 1 1 1\
+4 3 2 3 4\
 4 3 5 5 5
 
 Output:
 
 Number of active nodes: 2
 
-Chunks scheduled on each active node:
-Node 0:
-    VM 0:
-        Chunk scheduled: 1 at time: 0
-        Chunk scheduled: 1 at time: 1
-        Chunk scheduled: 1 at time: 2
-Node 1:
-    VM 0:
-        Chunk scheduled: 5 at time: 0
-        Chunk scheduled: 5 at time: 1
-        Chunk scheduled: 5 at time: 2
+Chunks scheduled on each active node:\
+Node 0:\
+&emsp;    VM 0:\
+&emsp;&emsp;        Chunk scheduled: 1 at time: 0\
+&emsp;&emsp;        Chunk scheduled: 1 at time: 1\
+&emsp;&emsp;        Chunk scheduled: 1 at time: 2\
+Node 1:\
+&emsp;    VM 0:\
+&emsp;&emsp;        Chunk scheduled: 5 at time: 0\
+&emsp;&emsp;        Chunk scheduled: 5 at time: 1\
+&emsp;&emsp;        Chunk scheduled: 5 at time: 2
