@@ -39,6 +39,7 @@ def schedule_chunks(C, d, N):
             if flag:
                 continue
             
+            # print("Chunk id: ", chunk_id, "NTS_rd: ", NTS_rd, "remaining_time_slots: ", remaining_time_slots, "t_start: ", t_start, "t_end: ", t_end, "current_VM: ", current_VM)
             # Check if remaining time slots of the chunk is greater than 0
             if remaining_time_slots - NTS_rd > 0:
                 # Update remaining time slots and NTS_rd
@@ -50,18 +51,11 @@ def schedule_chunks(C, d, N):
                 C[chunk_index].slots_required = 0
                 C[chunk_index].finished = True  # Set remaining time slots to 0 and mark chunk as finished
             nodes[N-1].chunks_scheduled[current_VM].append((C[chunk_index], t_start, t_end))    
-            print(C[chunk_index].id, t_start, t_end, N-1)
+            print("Chunk id: ", chunk_id, "scheduled at time: ", t_start, " on VM: ", current_VM, " on node: ", N-1)
             
 
-    
-    # Remove finished chunks from the list
-    for chunk in C:
-        if chunk.finished:
-            C.remove(chunk)
-   # print size of C
-    # print(len(C))
-
-    return C
+    # Return a new list C that contains only the chunks that have not been finished yet
+    return [chunk for chunk in C if not chunk.finished]
 
 def schedule_chunks_modified(node, i, d, N):
     C = []
@@ -70,11 +64,14 @@ def schedule_chunks_modified(node, i, d, N):
     
     for i in range(S):
         for chunk in node.chunks_scheduled[i]:
-            if chunk[0] in deadlines_i.chunks_required:
-                C.append(chunk[0])
+            for chunk_id in deadlines_i.chunks_required:
+                if chunk[0].id == chunk_id.id:
+                    C.append(chunk_id)
+                    break
     # Sort C based on the remaining number of required time slots for d in ascending order
     C.sort(key=lambda x: x.slots_required)  # Assuming each chunk in C is represented as (chunk_id, remaining_time_slots, finished)
-
+    # print("node: ", node.id)
+    # print("deadline: ", d)
     for chunk_index in range(len(C)):
         # print(C)
         chunk_id = C[chunk_index].id
@@ -82,6 +79,7 @@ def schedule_chunks_modified(node, i, d, N):
         finished = C[chunk_index].finished
 
         # Check if the chunk has not been finished yet
+        # print("Chunk id: ", chunk_id, "remaining_time_slots: ", remaining_time_slots)
         if not finished:
             NTS_rd = 0
             current_VM = 0
@@ -122,18 +120,20 @@ def schedule_chunks_modified(node, i, d, N):
                 C[chunk_index].slots_required = 0
                 C[chunk_index].finished = True  # Set remaining time slots to 0 and mark chunk as finished
             nodes[N-1].chunks_scheduled[current_VM].append((C[chunk_index], t_start, t_end))    
-            print(C[chunk_index].id, t_start, t_end, N-1)
+            print("Chunk id: ", chunk_id, "scheduled at time: ", t_start, " on VM: ", current_VM, " on node: ", N-1)
 
     
     # Remove finished chunks from the deadlines_i list
     for chunk in C:
         if chunk.finished:
-            deadlines_i.chunks_required.remove(chunk)
+            for j in deadlines_i.chunks_required:
+                if j.id == chunk.id:
+                    deadlines_i.chunks_required.remove(j)
         else:
-            for i in deadlines_i.chunks_required:
-                if i.id == chunk.id:
-                    i.slots_required = chunk.slots_required
-    deadlines[i] = deadlines_i
+            for j in deadlines_i.chunks_required:
+                if j.id == chunk.id:
+                    j.slots_required = chunk.slots_required
+    deadlines[i].chunks_required = deadlines_i.chunks_required
     return C
 
 def CRED_S(F, B, d_i, N):
@@ -145,40 +145,38 @@ def CRED_S(F, B, d_i, N):
         # print(type(C_r[0]))
         C_r.sort(key=lambda x: x.slots_required)
         
-        total_F = sum(C_r[i].slots_required for i in range(1, min(B,len(C_r))))
+        # total_F = sum(C_r[i].slots_required for i in range(1, min(B,len(C_r))))
 
-        H_B=[]
-        if total_F>S*d_i:
-            for i in range(min(B,len(C_r))):
-                H_B.append(C_r[i])
-            # Remove the chunks from the list
-            for chunk in H_B:
-                C_r.remove(chunk)
-
-            C= schedule_chunks(H_B, d_i, N)
-            # print("Value of C: ", C)
-            if len(C)>0:
-                C_r.extend(C)
-            N+=1
-
-        else:
-            break
-    while len(C_r)>0:
-        # print("length of C_r: ", len(C_r))
         H_B=[]
         for i in range(min(B,len(C_r))):
             H_B.append(C_r[i])
-            # print(C_r[i])
-        
         # Remove the chunks from the list
         for chunk in H_B:
             C_r.remove(chunk)
-            # print("Chunk removed ", chunk.id)
 
-        C= schedule_chunks(H_B,d_i,N)
+        C= schedule_chunks(H_B, d_i, N)
+        # print("Value of C: ")
+        # for i in C:
+        #     print(i.id)
         if len(C)>0:
             C_r.extend(C)
         N+=1
+    # while len(C_r)>0:
+    #     print("length of C_r: ", len(C_r))
+    #     H_B=[]
+    #     for i in range(min(B,len(C_r))):
+    #         H_B.append(C_r[i])
+    #         # print(C_r[i])
+        
+    #     # Remove the chunks from the list
+    #     for chunk in H_B:
+    #         C_r.remove(chunk)
+    #         # print("Chunk removed ", chunk.id)
+
+    #     C= schedule_chunks(H_B,d_i,N)
+    #     if len(C)>0:
+    #         C_r.extend(C)
+    #     N+=1
     return N
 
 def CRED_M(nodes, chunks, deadlines, B, jobs, S): 
@@ -187,10 +185,13 @@ def CRED_M(nodes, chunks, deadlines, B, jobs, S):
     
     for i in range(D):
         chunks_i = deadlines[i].chunks_required
-        print("chunks_i", chunks_i)
+        print("Deadline: ", deadlines[i].deadline)
+        for chunk in chunks_i:
+            print(chunk.id, chunk.slots_required)
         num_active_nodes = CRED_S(chunks_i, B, jobs[i].deadline, num_active_nodes)
         for n in range(num_active_nodes):
             for j in range(i+1, D):
+                print("Deadline: ", deadlines[j].deadline, "Node: ", n)
                 schedule_chunks_modified(nodes[n],j,deadlines[j].deadline, n+1)
     
     return num_active_nodes
@@ -275,11 +276,13 @@ for job in jobs:
                     chunks.append(chunk)
                 deadline.chunks_required.extend(chunks_required)    
 
-for deadline in deadlines:
-    print("Deadline: ", deadline.deadline)
-    for chunk in deadline.chunks_required:
-        print(chunk.id, chunk.slots_required)
+# for deadline in deadlines:
+#     print("Deadline: ", deadline.deadline)
+#     for chunk in deadline.chunks_required:
+#         print(chunk.id, chunk.slots_required)
 
+# sort the deadlines based on the deadline value
+deadlines.sort(key=lambda x: x.deadline)
 
 class Node:
     def __init__(self, id, S):
@@ -297,8 +300,8 @@ print(f"Number of active nodes: {num_active_nodes}")
 # print the chunks scheduled on each node
 for node in nodes:
     if node.id < num_active_nodes:
-        print(f"Chunks scheduled on node {node.id}: ")
+        print(f"\nChunks scheduled on node {node.id}: \n")
         for i in range(S):
-            print("VM ", i )
+            print("VM", i )
             for chunk in node.chunks_scheduled[i]:
                 print("Chunk scheduled: ", chunk[0].id, " at time: ", chunk[1])
