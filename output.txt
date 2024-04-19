@@ -1,46 +1,188 @@
 Test Case 1:
-Number of active nodes: 4
 
-Chunks scheduled on node 0:
-
-VM 0:
-Chunk scheduled: 2 at time: 0
-Chunk scheduled: 3 at time: 1
-
-Chunks scheduled on node 1:
-
-VM 0:
-Chunk scheduled: 4 at time: 0
-Chunk scheduled: 5 at time: 1
-
-Chunks scheduled on node 2:
-
-VM 0:
-Chunk scheduled: 1 at time: 0
-
-Chunks scheduled on node 3:
-
-VM 0:
-Chunk scheduled: 1 at time: 0
-
-Test Case 2:
 Number of active nodes: 3
 
 Chunks scheduled on node 0:
-
-VM 0:
-Chunk scheduled: 1 at time: 0
-Chunk scheduled: 2 at time: 1
-Chunk scheduled: 2 at time: 2
+	VM 0:
+		Chunk scheduled: 10 at time: 0
+		Chunk scheduled: 7 at time: 1
+		Chunk scheduled: 10 at time: 2
+		Chunk scheduled: 7 at time: 3
 
 Chunks scheduled on node 1:
-
-VM 0:
-Chunk scheduled: 3 at time: 0
-Chunk scheduled: 3 at time: 1
+	VM 0:
+		Chunk scheduled: 3 at time: 0
+		Chunk scheduled: 3 at time: 1
 
 Chunks scheduled on node 2:
+	VM 0:
+		Chunk scheduled: 2 at time: 0
+		Chunk scheduled: 6 at time: 1
+		Chunk scheduled: 8 at time: 2
+		Chunk scheduled: 5 at time: 3
+		Chunk scheduled: 9 at time: 4
 
-VM 0:
-Chunk scheduled: 4 at time: 0
+Test Case 2:
+
+Number of active nodes: 5
+
+Chunks scheduled on node 0:
+	VM 0:
+		Chunk scheduled: 10 at time: 0
+		Chunk scheduled: 2 at time: 1
+		Chunk scheduled: 10 at time: 2
+		Chunk scheduled: 2 at time: 3
+		Chunk scheduled: 10 at time: 4
+
+Chunks scheduled on node 1:
+	VM 0:
+		Chunk scheduled: 6 at time: 0
+		Chunk scheduled: 6 at time: 1
+
+Chunks scheduled on node 2:
+	VM 0:
+		Chunk scheduled: 4 at time: 0
+		Chunk scheduled: 1 at time: 1
+
+Chunks scheduled on node 3:
+	VM 0:
+		Chunk scheduled: 9 at time: 0
+
+Chunks scheduled on node 4:
+	VM 0:
+		Chunk scheduled: 5 at time: 0
+
+Test Case 3:
+
+Number of active nodes: 3
+
+Chunks scheduled on node 0:
+	VM 0:
+		Chunk scheduled: 8 at time: 0
+		Chunk scheduled: 7 at time: 1
+	VM 1:
+		Chunk scheduled: 1 at time: 0
+	VM 2:
+		Chunk scheduled: 7 at time: 0
+
+Chunks scheduled on node 1:
+	VM 0:
+		Chunk scheduled: 10 at time: 0
+	VM 1:
+		Chunk scheduled: 5 at time: 0
+	VM 2:
+		Chunk scheduled: 3 at time: 0
+
+Chunks scheduled on node 2:
+	VM 0:
+		Chunk scheduled: 9 at time: 0
+
+Test Case 4:
+
+Number of active nodes: 3
+
+Chunks scheduled on node 0:
+	VM 0:
+		Chunk scheduled: 4 at time: 0
+
+Chunks scheduled on node 1:
+	VM 0:
+		Chunk scheduled: 2 at time: 0
+	VM 1:
+		Chunk scheduled: 9 at time: 0
+
+Chunks scheduled on node 2:
+	VM 0:
+		Chunk scheduled: 6 at time: 0
+	VM 1:
+		Chunk scheduled: 8 at time: 0
+	VM 2:
+		Chunk scheduled: 7 at time: 0
+
+Test Case 5:
+
+Number of active nodes: 1
+
+Chunks scheduled on node 0:
+	VM 0:
+		Chunk scheduled: 1 at time: 0
+	VM 1:
+		Chunk scheduled: 10 at time: 0
+
+Test Case 6:
+
+Number of active nodes: 1
+
+Chunks scheduled on node 0:
+	VM 0:
+		Chunk scheduled: 7 at time: 0
+		Chunk scheduled: 9 at time: 1
+
+Test Case 7:
+
+Number of active nodes: 1
+
+Chunks scheduled on node 0:
+	VM 0:
+		Chunk scheduled: 8 at time: 0
+
+Test Case 8:
+
+Number of active nodes: 1
+
+Chunks scheduled on node 0:
+	VM 0:
+		Chunk scheduled: 3 at time: 0
+
+Test Case 9:
+
+Number of active nodes: 2
+
+Chunks scheduled on node 0:
+	VM 0:
+		Chunk scheduled: 2 at time: 0
+	VM 1:
+		Chunk scheduled: 4 at time: 0
+
+Chunks scheduled on node 1:
+	VM 0:
+		Chunk scheduled: 6 at time: 0
+	VM 1:
+		Chunk scheduled: 8 at time: 0
+
+Test Case 10:
+
+Number of active nodes: 8
+
+Chunks scheduled on node 0:
+	VM 0:
+		Chunk scheduled: 5 at time: 0
+
+Chunks scheduled on node 1:
+	VM 0:
+		Chunk scheduled: 8 at time: 0
+
+Chunks scheduled on node 2:
+	VM 0:
+		Chunk scheduled: 3 at time: 0
+
+Chunks scheduled on node 3:
+	VM 0:
+		Chunk scheduled: 4 at time: 0
+
+Chunks scheduled on node 4:
+	VM 0:
+		Chunk scheduled: 9 at time: 0
+
+Chunks scheduled on node 5:
+	VM 0:
+		Chunk scheduled: 10 at time: 0
+
+Chunks scheduled on node 6:
+	VM 0:
+		Chunk scheduled: 6 at time: 0
+
+Chunks scheduled on node 7:
+	VM 0:
+		Chunk scheduled: 9 at time: 0
 

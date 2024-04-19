@@ -197,18 +197,19 @@ def read_input(file_name):
 
 
 def print_output(num_active_nodes, nodes, S, out_file):
-    out_file.write(f"Number of active nodes: {num_active_nodes}\n")
+    out_file.write(f"\nNumber of active nodes: {num_active_nodes}\n")
 
     for node in nodes:
         if node.id < num_active_nodes:
             out_file.write(f"\nChunks scheduled on node {node.id}:\n")
             for i in range(S):
-                out_file.write(f"\nVM {i}:\n")
-                for chunk in node.chunks_scheduled[i]:
-                    out_file.write(f"Chunk scheduled: {chunk[0].id} at time: {chunk[1]}\n")
+                if len(node.chunks_scheduled[i]) > 0:
+                    out_file.write(f"\tVM {i}:\n")
+                    for chunk in node.chunks_scheduled[i]:
+                        out_file.write(f"\t\tChunk scheduled: {chunk[0].id} at time: {chunk[1]}\n")
 
 if __name__ == "__main__":
-    input_file = "input.txt"
+    input_file = "test_case.txt"
     output_file = "output.txt"
 
     test_cases = read_input(input_file)
