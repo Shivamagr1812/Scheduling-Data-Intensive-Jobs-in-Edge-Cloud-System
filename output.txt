@@ -1,0 +1,46 @@
+Test Case 1:
+Number of active nodes: 4
+
+Chunks scheduled on node 0:
+
+VM 0:
+Chunk scheduled: 2 at time: 0
+Chunk scheduled: 3 at time: 1
+
+Chunks scheduled on node 1:
+
+VM 0:
+Chunk scheduled: 4 at time: 0
+Chunk scheduled: 5 at time: 1
+
+Chunks scheduled on node 2:
+
+VM 0:
+Chunk scheduled: 1 at time: 0
+
+Chunks scheduled on node 3:
+
+VM 0:
+Chunk scheduled: 1 at time: 0
+
+Test Case 2:
+Number of active nodes: 3
+
+Chunks scheduled on node 0:
+
+VM 0:
+Chunk scheduled: 1 at time: 0
+Chunk scheduled: 2 at time: 1
+Chunk scheduled: 2 at time: 2
+
+Chunks scheduled on node 1:
+
+VM 0:
+Chunk scheduled: 3 at time: 0
+Chunk scheduled: 3 at time: 1
+
+Chunks scheduled on node 2:
+
+VM 0:
+Chunk scheduled: 4 at time: 0
+
