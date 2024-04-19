@@ -178,12 +178,10 @@ def read_input(file_name):
     i = 1
     for _ in range(num_test_cases):
         J, Nodes, B, S = map(int, lines[i].split())
-        print(J, Nodes, B , S)
         i += 1
         
         jobs = []
         for _ in range(J):
-            print(lines[i])
             parts = lines[i].split()
             deadline = int(parts[0])
             num_chunks_required = int(parts[1])
