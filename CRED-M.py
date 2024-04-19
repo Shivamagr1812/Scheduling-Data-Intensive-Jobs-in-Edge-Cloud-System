@@ -57,9 +57,10 @@ def schedule_chunks(C, d, N):
     # Return a new list C that contains only the chunks that have not been finished yet
     return [chunk for chunk in C if not chunk.finished]
 
-def schedule_chunks_modified(node, i, d, N):
+def schedule_chunks_modified(node, ind, d, N):
     C = []
-    deadlines_i = deadlines[i]
+    # print("deadlines_i", deadlines[ind].chunks_required)
+    deadlines_i = deadlines[ind]
     # use node and deadlines_i to create a list C that contains objects in C whose chunk id exists in the node list
     
     for i in range(S):
@@ -133,7 +134,8 @@ def schedule_chunks_modified(node, i, d, N):
             for j in deadlines_i.chunks_required:
                 if j.id == chunk.id:
                     j.slots_required = chunk.slots_required
-    deadlines[i].chunks_required = deadlines_i.chunks_required
+    deadlines[ind].chunks_required = deadlines_i.chunks_required
+    # print("deadlines_i", deadlines[ind].chunks_required)
     return C
 
 def CRED_S(F, B, d_i, N):
@@ -185,16 +187,16 @@ def CRED_M(nodes, chunks, deadlines, B, jobs, S):
     
     for i in range(D):
         chunks_i = deadlines[i].chunks_required
-        print("Deadline: ", deadlines[i].deadline)
-        for chunk in chunks_i:
-            print(chunk.id, chunk.slots_required)
+        # print("Deadline: ", deadlines[i].deadline)
+        # for chunk in chunks_i:
+        #     print(chunk.id, chunk.slots_required)
         num_active_nodes = CRED_S(chunks_i, B, jobs[i].deadline, num_active_nodes)
-        for n in range(num_active_nodes):
+        for n in range(num_active_nodes-1):
             for j in range(i+1, D):
-                print("Deadline: ", deadlines[j].deadline, "Node: ", n)
+                # print("Deadline: ", deadlines[j].deadline, "Node: ", n)
                 schedule_chunks_modified(nodes[n],j,deadlines[j].deadline, n+1)
     
-    return num_active_nodes
+    return num_active_nodes-1
 
 
 # User Input
@@ -295,7 +297,8 @@ for n in range(Nodes):
     nodes.append(node)
 
 num_active_nodes = CRED_M(nodes, chunks, deadlines, B, jobs, S)
-print(f"Number of active nodes: {num_active_nodes}")
+print("-----------------------------------------------------------------------------")
+print(f"\nNumber of active nodes: {num_active_nodes}")
 
 # print the chunks scheduled on each node
 for node in nodes:
