@@ -218,15 +218,15 @@ class Job:
 #     job = Job(deadline, chunks_required)
 #     jobs.append(job)
 
-J = 3  # Number of jobs
-Nodes = 10  # Number of nodes
-B = 4  # Maximum number of data chunks each node can host
-S = 2  # Number of VMs (virtual machines) on each node
+J =3  # Number of jobs
+Nodes = 15  # Number of nodes
+B = 2  # Maximum number of data chunks each node can host
+S = 1  # Number of VMs (virtual machines) on each node
 
 jobs = [
-    Job(2, [1, 2, 3]),
+    Job(4, [1, 1, 1, 1, 1, 1]),
     Job(4, [2, 3, 4]),
-    Job(3, [3, 4, 5])
+    Job(4, [5, 5, 5])
 ]
 
 class Chunk:
@@ -247,12 +247,19 @@ for job in jobs:
         # print(job.deadline, job.chunks_required)
         chunks_required = []
         for chunk_id in job.chunks_required:
+            chunk_exists = False
+            for chunk in chunks_required:
+                if chunk.id == chunk_id:
+                    chunk_exists = True
+                    break
             
-            chunk = Chunk(chunk_id)
-            chunk.slots_required = 1
+            if chunk_exists:
+                chunk.slots_required += 1
+            else:
+                chunk = Chunk(chunk_id)
+                chunk.slots_required = 1
+                chunks_required.append(chunk)
 
-            chunks_required.append(chunk)
-            chunks.append(chunk)
         deadline = Deadline(job.deadline, chunks_required)
         deadlines.append(deadline)
         
@@ -274,14 +281,12 @@ for job in jobs:
                         chunk = Chunk(chunk_id)
                         chunk.slots_required = 1
 
-                    chunks_required.append(chunk)
-                    chunks.append(chunk)
-                deadline.chunks_required.extend(chunks_required)    
+                    deadline.chunks_required.append(chunk)
 
-# for deadline in deadlines:
-#     print("Deadline: ", deadline.deadline)
-#     for chunk in deadline.chunks_required:
-#         print(chunk.id, chunk.slots_required)
+for deadline in deadlines:
+    print("Deadline: ", deadline.deadline)
+    for chunk in deadline.chunks_required:
+        print(chunk.id, chunk.slots_required)
 
 # sort the deadlines based on the deadline value
 deadlines.sort(key=lambda x: x.deadline)
